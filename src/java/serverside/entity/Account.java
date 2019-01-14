@@ -6,16 +6,22 @@
 package serverside.entity;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import static javax.persistence.FetchType.EAGER;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Entity representing bank accounts for customers. It contains the following
@@ -39,6 +45,7 @@ public class Account implements Serializable {
     /**
      * Type of the account.
      */
+    @Enumerated(EnumType.ORDINAL)
     private AccountType type;
     /**
      * Description of the account.
@@ -62,7 +69,8 @@ public class Account implements Serializable {
     /**
      * Begin balance timestamp.
      */
-    private Timestamp beginBalanceTimestamp;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date beginBalanceTimestamp;
     /**
      * Relational field containing Customers owning the account. 
      */
@@ -71,7 +79,7 @@ public class Account implements Serializable {
     /**
      * Relational field containing the list of movements on the account.
      */
-    @OneToMany(mappedBy="account")
+    @OneToMany(mappedBy="account",fetch=EAGER)
     private List<Movement> movements;
     /**
      * 
@@ -169,20 +177,21 @@ public class Account implements Serializable {
      * Begin balance timestamp.
      * @return the beginBalanceTimestamp
      */
-    public Timestamp getBeginBalanceTimestamp() {
+    public Date getBeginBalanceTimestamp() {
         return beginBalanceTimestamp;
     }
     /**
      * Begin balance timestamp.
      * @param beginBalanceTimestamp the beginBalanceTimestamp to set
      */
-    public void setBeginBalanceTimestamp(Timestamp beginBalanceTimestamp) {
+    public void setBeginBalanceTimestamp(Date beginBalanceTimestamp) {
         this.beginBalanceTimestamp = beginBalanceTimestamp;
     }
     /**
      * Relational field containing Customers owning the account.
      * @return the customers
      */
+    @XmlTransient
     public List<Customer> getCustomers() {
         return customers;
     }

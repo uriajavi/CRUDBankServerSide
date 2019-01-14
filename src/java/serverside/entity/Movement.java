@@ -6,13 +6,17 @@
 package serverside.entity;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Entity representing movements for accounts. It contains the following
@@ -22,6 +26,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="movement",schema="bankdb")
+@XmlRootElement
 public class Movement implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,7 +44,8 @@ public class Movement implements Serializable {
     /**
      * Timestamp for the movement.
      */
-    private Timestamp timestamp;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timestamp;
     /**
      * Amount of the movement.
      */
@@ -109,6 +115,7 @@ public class Movement implements Serializable {
      * Account for the movement.
      * @return the account
      */
+    @XmlTransient
     public Account getAccount() {
         return account;
     }
@@ -125,7 +132,7 @@ public class Movement implements Serializable {
      * Timestamp for the movement.
      * @return the timestamp
      */
-    public Timestamp getTimestamp() {
+    public Date getTimestamp() {
         return timestamp;
     }
 
@@ -133,7 +140,7 @@ public class Movement implements Serializable {
      * Timestamp for the movement.
      * @param timestamp the timestamp to set
      */
-    public void setTimestamp(Timestamp timestamp) {
+    public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
 

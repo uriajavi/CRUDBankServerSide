@@ -8,6 +8,7 @@ package serverside.entity;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
+import static javax.persistence.FetchType.EAGER;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +16,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Entity representing bank customers. Contains personal data, identification 
@@ -72,7 +74,7 @@ public class Customer implements Serializable {
     /**
      * Relational field for customer's accounts.
      */
-    @ManyToMany
+    @ManyToMany(fetch=EAGER)
     @JoinTable(schema="bankdb")
     private List<Account> accounts;
     /**
