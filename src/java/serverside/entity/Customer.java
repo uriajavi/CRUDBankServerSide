@@ -7,6 +7,8 @@ package serverside.entity;
 
 import java.io.Serializable;
 import java.util.List;
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.CascadeType.MERGE;
 import javax.persistence.Entity;
 import static javax.persistence.FetchType.EAGER;
 import javax.persistence.GeneratedValue;
@@ -74,7 +76,7 @@ public class Customer implements Serializable {
     /**
      * Relational field for customer's accounts.
      */
-    @ManyToMany(fetch=EAGER)
+    @ManyToMany(fetch=EAGER,cascade=ALL)
     @JoinTable(schema="bankdb")
     private List<Account> accounts;
     /**
