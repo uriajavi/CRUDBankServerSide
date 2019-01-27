@@ -35,7 +35,6 @@ public class Customer implements Serializable {
      * Identification field for client.
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     /**
      * First name of the customer.

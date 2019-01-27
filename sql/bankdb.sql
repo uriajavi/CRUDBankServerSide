@@ -43,7 +43,9 @@
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` VALUES (1,'New York','jsmith@enterprise.net','John','Smith','S.',15556969699,'New York','163rd St.',10032),(2,'Philadelphia','awallace@gmail.com','Ann','Wallace','M.',16665984477,'Pennsylvania','Main St.',10056);
+INSERT INTO `customer` VALUES 
+(102263301,'New York','jsmith@enterprise.net','John','Smith','S.',15556969699,'New York','163rd St.',10032),
+(299985563,'Philadelphia','awallace@gmail.com','Ann','Wallace','M.',16665984477,'Pennsylvania','Main St.',10056);
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 --
@@ -71,7 +73,10 @@ UNLOCK TABLES;
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES (1,999.99,999.99,'2019-01-14 19:19:04',0,'Savings Account',0),(2,200,100,'2019-01-14 19:28:28',1000,'Check Account with Credit Line',1),(3,10000,10000,'2019-01-14 19:29:50',0,'Check Account',0);
+INSERT INTO `account` VALUES 
+(1569874954,999.99,999.99,'2019-01-14 19:19:04',0,'Savings Account',0),
+(3252214522,200,100,'2019-01-14 19:28:28',1000,'Check Account with Credit Line',1),
+(2654785441,10000,10000,'2019-01-14 19:29:50',0,'Check Account',0);
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -100,7 +105,11 @@ UNLOCK TABLES;
 
 LOCK TABLES `customer_account` WRITE;
 /*!40000 ALTER TABLE `customer_account` DISABLE KEYS */;
-INSERT INTO `customer_account` VALUES (1,1),(2,2),(1,3),(2,3);
+INSERT INTO `customer_account` VALUES 
+(102263301,1569874954),
+(102263301,2654785441),
+(299985563,3252214522),
+(299985563,2654785441);
 /*!40000 ALTER TABLE `customer_account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -130,7 +139,8 @@ UNLOCK TABLES;
 
 LOCK TABLES `movement` WRITE;
 /*!40000 ALTER TABLE `movement` DISABLE KEYS */;
-INSERT INTO `movement` VALUES (1,100,200,'Payment','2019-01-14 19:34:06',2);
+INSERT INTO `movement` VALUES 
+(1,100,200,'Payment','2019-01-14 19:34:06',2654785441);
 /*!40000 ALTER TABLE `movement` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

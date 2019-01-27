@@ -41,7 +41,6 @@ public class Account implements Serializable {
      * Identification field for the account.
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     /**
      * Type of the account.
