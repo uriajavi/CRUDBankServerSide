@@ -7,6 +7,7 @@ package serverside.entity;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.CascadeType.MERGE;
 import javax.persistence.Entity;
@@ -77,7 +78,7 @@ public class Customer implements Serializable {
      */
     @ManyToMany(fetch=EAGER,cascade=ALL)
     @JoinTable(schema="bankdb")
-    private List<Account> accounts;
+    private Set<Account> accounts;
     /**
      * 
      * @return the id of the customer.
@@ -203,13 +204,13 @@ public class Customer implements Serializable {
     /**
      * @return the accounts
      */
-    public List<Account> getAccounts() {
+    public Set<Account> getAccounts() {
         return accounts;
     }
     /**
      * @param accounts the accounts to set
      */
-    public void setAccounts(List<Account> accounts) {
+    public void setAccounts(Set<Account> accounts) {
         this.accounts = accounts;
     }
     /**
