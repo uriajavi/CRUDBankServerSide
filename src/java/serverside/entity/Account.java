@@ -17,6 +17,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -33,6 +34,9 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name="account",schema="bankdb")
+@NamedQuery(name="findAllAccounts",
+            query="SELECT a FROM Account a ORDER BY a.id DESC"
+)
 @XmlRootElement
 public class Account implements Serializable {
 

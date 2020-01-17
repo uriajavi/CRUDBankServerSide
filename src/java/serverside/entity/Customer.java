@@ -17,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -28,6 +29,9 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name="customer",schema="bankdb")
+@NamedQuery(name="findAllCustomers",
+            query="SELECT c FROM Customer c"
+)
 @XmlRootElement
 public class Customer implements Serializable {
 
