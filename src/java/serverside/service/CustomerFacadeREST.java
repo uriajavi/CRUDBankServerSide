@@ -80,7 +80,7 @@ public class CustomerFacadeREST {
 
     @GET
     @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     public Customer find(@PathParam("id") Long id) {
         try{
             LOGGER.log(Level.INFO,"Reading data for customer {0}",id);
@@ -93,7 +93,7 @@ public class CustomerFacadeREST {
     }
 
     @GET
-    @Produces({MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     public List<Customer> findAll() {
         try{
             LOGGER.log(Level.INFO,"Reading data for all customers.");
