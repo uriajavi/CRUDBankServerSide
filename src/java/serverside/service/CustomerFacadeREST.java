@@ -9,9 +9,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -30,19 +27,25 @@ import serverside.exceptions.UpdateException;
 
 /**
  * RESTful service for Customers.
- * @author javi
+ * @author Javier Martín Uría
  */
 @Path("customer")
 public class CustomerFacadeREST {
-
+    /**
+     * EJB object implementing business logic.
+     */
     @EJB
     private BankManagerLocal ejb;
-    
+    /**
+     * Logger for this class.
+     */
     private Logger LOGGER=Logger.getLogger(CustomerFacadeREST.class.getName());
-
-
+    /**
+     * POST method to create customers: uses createCustomer business logic method.
+     * @param entity The Customer object containing data.
+     */
     @POST
-    @Consumes({MediaType.APPLICATION_XML})
+    @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     public void create(Customer entity) {
         try {
             LOGGER.log(Level.INFO,"Creating customer {0}",entity.getId());
@@ -52,9 +55,12 @@ public class CustomerFacadeREST {
             throw new InternalServerErrorException(ex.getMessage());        
         }
     }
-
+    /**
+     * PUT method to modify customers: uses updateCustomer business logic method.
+     * @param entity The Customer object containing data.
+     */
     @PUT
-    @Consumes({MediaType.APPLICATION_XML})
+    @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     public void edit(Customer entity) {
         try {
             LOGGER.log(Level.INFO,"Updating customer {0}",entity.getId());
@@ -64,7 +70,10 @@ public class CustomerFacadeREST {
             throw new InternalServerErrorException(ex.getMessage());        
         }
     }
-
+    /**
+     * DELETE method to remove customers: uses removeCustomer business logic method.
+     * @param id The id for the customer to be deleted.
+     */
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") Long id) {
@@ -77,7 +86,12 @@ public class CustomerFacadeREST {
         }
                 
     }
-
+    /**
+     * GET method for getting a customer by its id: it uses the business method
+     * findCustomer.
+     * @param id The customer id.
+     * @return A Customer object.
+     */
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
@@ -91,7 +105,10 @@ public class CustomerFacadeREST {
         }
         
     }
-
+    /**
+     * GET method to get all customers data: it uses business method findAllCustomers.
+     * @return A list of Customer objects.
+     */
     @GET
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     public List<Customer> findAll() {

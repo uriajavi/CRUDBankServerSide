@@ -5,8 +5,11 @@
  */
 package serverside.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.io.Serializable;
 import java.util.Date;
+import static javax.persistence.CascadeType.MERGE;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * Entity representing movements for accounts. It contains the following
  * fields: id, account id, description, movement timestamp, account balance after the
  * movement and amount of the movement. 
- * @author javi
+ * @author Javier Martín Uría
  */
 @Entity
 @Table(name="movement",schema="bankdb")
@@ -49,6 +52,8 @@ public class Movement implements Serializable {
      * Timestamp for the movement.
      */
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonSerialize(as=Date.class)
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ssXXX")
     private Date timestamp;
     /**
      * Amount of the movement.
@@ -119,7 +124,6 @@ public class Movement implements Serializable {
      * Account for the movement.
      * @return the account
      */
-    @XmlTransient
     public Account getAccount() {
         return account;
     }

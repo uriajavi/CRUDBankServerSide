@@ -7,7 +7,7 @@ package serverside.entity;
 
 /**
  * Accounts types for Account instances: standard or credit type.
- * @author javi
+ * @author Javier Martín Uría
  */
 public enum AccountType {
     /**

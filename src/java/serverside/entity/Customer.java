@@ -6,14 +6,11 @@
 package serverside.entity;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Set;
-import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
 import javax.persistence.Entity;
 import static javax.persistence.FetchType.EAGER;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -25,7 +22,7 @@ import javax.xml.bind.annotation.XmlTransient;
 /**
  * Entity representing bank customers. Contains personal data, identification 
  * data and relational data for accessing customer accounts data. 
- * @author javi
+ * @author Javier Martín Uría
  */
 @Entity
 @Table(name="customer",schema="bankdb")
@@ -80,8 +77,7 @@ public class Customer implements Serializable {
     /**
      * Relational field for customer's accounts.
      */
-    @ManyToMany(fetch=EAGER,cascade=ALL)
-    @JoinTable(schema="bankdb")
+    @ManyToMany(mappedBy="customers",cascade=MERGE,fetch=EAGER)
     private Set<Account> accounts;
     /**
      * 
@@ -208,6 +204,7 @@ public class Customer implements Serializable {
     /**
      * @return the accounts
      */
+    @XmlTransient
     public Set<Account> getAccounts() {
         return accounts;
     }

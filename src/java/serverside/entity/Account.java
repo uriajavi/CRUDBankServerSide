@@ -5,17 +5,18 @@
  */
 package serverside.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
-import static javax.persistence.CascadeType.ALL;
+import java.util.Set;
+import static javax.persistence.CascadeType.MERGE;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import static javax.persistence.FetchType.EAGER;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -30,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * fields: account id, account type, account description, initial balance, initial balance date, 
  * current balance and credit limit. It also contains relational fields for getting
  * customers owning the account and movements or transactions made on the account.  
- * @author javi
+ * @author Javier Martín Uría
  */
 @Entity
 @Table(name="account",schema="bankdb")
@@ -74,17 +75,20 @@ public class Account implements Serializable {
      * Begin balance timestamp.
      */
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonSerialize(as=Date.class)
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ssXXX")
     private Date beginBalanceTimestamp;
     /**
      * Relational field containing Customers owning the account. 
      */
-    @ManyToMany(mappedBy="accounts")
-    private List<Customer> customers;
+    @ManyToMany(fetch=EAGER,cascade=MERGE)
+    @JoinTable(schema="bankdb",name="customer_account")
+    private Set<Customer> customers;
     /**
      * Relational field containing the list of movements on the account.
      */
     @OneToMany(mappedBy="account",fetch=EAGER)
-    private List<Movement> movements;
+    private Set<Movement> movements;
     /**
      * 
      * @return the id
@@ -195,15 +199,14 @@ public class Account implements Serializable {
      * Relational field containing Customers owning the account.
      * @return the customers
      */
-    @XmlTransient
-    public List<Customer> getCustomers() {
+    public Set<Customer> getCustomers() {
         return customers;
     }
     /**
      * Relational field containing Customers owning the account.
      * @param customers the customers to set
      */
-    public void setCustomers(List<Customer> customers) {
+    public void setCustomers(Set<Customer> customers) {
         this.customers = customers;
     }
 
@@ -211,7 +214,8 @@ public class Account implements Serializable {
      * Relational field containing the list of movements on the account.
      * @return the movements
      */
-    public List<Movement> getMovements() {
+    @XmlTransient
+    public Set<Movement> getMovements() {
         return movements;
     }
 
@@ -219,7 +223,7 @@ public class Account implements Serializable {
      * Relational field containing the list of movements on the account.
      * @param movements the movements to set
      */
-    public void setMovements(List<Movement> movements) {
+    public void setMovements(Set<Movement> movements) {
         this.movements = movements;
     }
     /**

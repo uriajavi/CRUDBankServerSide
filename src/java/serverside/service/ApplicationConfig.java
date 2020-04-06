@@ -10,7 +10,7 @@ import javax.ws.rs.core.Application;
 
 /**
  * This is the User management RESTful web service application class.
- * @author javi
+ * @author Javier Martín Uría
  */
 @javax.ws.rs.ApplicationPath("webresources")
 public class ApplicationConfig extends Application {
