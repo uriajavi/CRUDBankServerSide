@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.24, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.29, for Linux (x86_64)
 --
 -- Host: localhost    Database: bankdb
 -- ------------------------------------------------------
--- Server version	5.7.24-0ubuntu0.18.04.1
+-- Server version	5.7.29-0ubuntu0.18.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,26 +16,14 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `customer`
+-- Dumping data for table `account`
 --
 
-/*DROP TABLE IF EXISTS `customer`;*/
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-/*CREATE TABLE `customer` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `city` varchar(255) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `firstName` varchar(255) DEFAULT NULL,
-  `lastName` varchar(255) DEFAULT NULL,
-  `middleInitial` varchar(255) DEFAULT NULL,
-  `phone` bigint(20) DEFAULT NULL,
-  `state` varchar(255) DEFAULT NULL,
-  `street` varchar(255) DEFAULT NULL,
-  `zip` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;*/
-/*!40101 SET character_set_client = @saved_cs_client */;
+LOCK TABLES `account` WRITE;
+/*!40000 ALTER TABLE `account` DISABLE KEYS */;
+INSERT INTO `account` VALUES (1569874954,999.99,999.99,'2019-01-14 19:19:04',0,'Savings Account',0),(2654785441,10000,10000,'2019-01-14 19:29:50',0,'Check Account',0),(3252214522,200,100,'2019-01-14 19:28:28',1000,'Check Account with Credit Line',1),(5255214522,3999,2000,'2020-04-05 18:26:28',2000,'Check Account with Credit Line',1);
+/*!40000 ALTER TABLE `account` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Dumping data for table `customer`
@@ -43,61 +31,9 @@
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` VALUES 
-(102263301,'New York','jsmith@enterprise.net','John','Smith','S.',15556969699,'New York','163rd St.',10032),
-(299985563,'Philadelphia','awallace@gmail.com','Ann','Wallace','M.',16665984477,'Pennsylvania','Main St.',10056);
+INSERT INTO `customer` VALUES (102263301,'New York','jsmith@enterprise.net','John','Smith','S.',15556969699,'New York','163rd St.',10032),(299985563,'Philadelphia','awallace@gmail.com','Ann','Wallace','M.',16665984477,'Pennsylvania','Main St.',10056),(345678401,'New York','rjwilliams@enterprise.net','Raymond','Williams','J.',15556969699,'New York','163rd St.',10032),(799985563,'Minneapolis','sbarnaby@gmail.com','Sean','Barnaby','G.',16665998777,'Minesota','York St.',36897),(799985598,'Atlanta','kjones@gmail.com','Katheleen','Jones','M.',987798777,'Georgia','56th st.',98745);
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
---
--- Table structure for table `account`
---
-
-/*DROP TABLE IF EXISTS `account`;*/
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-/*CREATE TABLE `account` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `balance` double DEFAULT NULL,
-  `beginBalance` double DEFAULT NULL,
-  `beginBalanceTimestamp` datetime DEFAULT NULL,
-  `creditLine` double DEFAULT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `type` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;*/
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `account`
---
-
-LOCK TABLES `account` WRITE;
-/*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES 
-(1569874954,999.99,999.99,'2019-01-14 19:19:04',0,'Savings Account',0),
-(3252214522,200,100,'2019-01-14 19:28:28',1000,'Check Account with Credit Line',1),
-(2654785441,10000,10000,'2019-01-14 19:29:50',0,'Check Account',0);
-/*!40000 ALTER TABLE `account` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
-
---
--- Table structure for table `customer_account`
---
-
-/*DROP TABLE IF EXISTS `customer_account`;*/
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-/*CREATE TABLE `customer_account` (
-  `customers_id` bigint(20) NOT NULL,
-  `accounts_id` bigint(20) NOT NULL,
-  KEY `FK_kc5dkuqeeepjdg57eg6x77rn6` (`accounts_id`),
-  KEY `FK_8qp6ga2rvrwicwkmlebt42ycm` (`customers_id`),
-  CONSTRAINT `FK_8qp6ga2rvrwicwkmlebt42ycm` FOREIGN KEY (`customers_id`) REFERENCES `customer` (`id`),
-  CONSTRAINT `FK_kc5dkuqeeepjdg57eg6x77rn6` FOREIGN KEY (`accounts_id`) REFERENCES `account` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;*/
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `customer_account`
@@ -105,33 +41,9 @@ UNLOCK TABLES;
 
 LOCK TABLES `customer_account` WRITE;
 /*!40000 ALTER TABLE `customer_account` DISABLE KEYS */;
-INSERT INTO `customer_account` VALUES 
-(102263301,1569874954),
-(102263301,2654785441),
-(299985563,3252214522),
-(299985563,2654785441);
+INSERT INTO `customer_account` VALUES (102263301,1569874954),(102263301,2654785441),(299985563,2654785441),(299985563,3252214522),(102263301,5255214522),(799985598,5255214522);
 /*!40000 ALTER TABLE `customer_account` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `movement`
---
-
-/*DROP TABLE IF EXISTS `movement`;*/
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-/*CREATE TABLE `movement` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `amount` double DEFAULT NULL,
-  `balance` double DEFAULT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `timestamp` datetime DEFAULT NULL,
-  `account_id` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_9wocy0ptspyecj0dwv8tvrd6o` (`account_id`),
-  CONSTRAINT `FK_9wocy0ptspyecj0dwv8tvrd6o` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;*/
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `movement`
@@ -139,8 +51,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `movement` WRITE;
 /*!40000 ALTER TABLE `movement` DISABLE KEYS */;
-INSERT INTO `movement` VALUES 
-(1,100,200,'Payment','2019-01-14 19:34:06',2654785441);
+INSERT INTO `movement` VALUES (1,100,100,'Deposit','2019-01-14 19:34:06',2654785441),(2,9900,10000,'Deposit','2019-02-02 16:32:41',2654785441),(3,200,10200,'Deposit','2019-02-02 16:35:11',2654785441),(4,-200,10000,'Payment','2019-02-02 16:35:47',2654785441),(7,100,200,'Deposit','2019-02-02 16:57:40',3252214522),(11,1999,2999,'Deposit','2020-04-04 20:23:40',5255214522),(12,1000,3999,'Deposit','2020-04-04 20:23:40',5255214522);
 /*!40000 ALTER TABLE `movement` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -153,4 +64,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-01-14 19:41:25
+-- Dump completed on 2020-04-06 20:10:12
