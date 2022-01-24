@@ -199,6 +199,7 @@ public class Account implements Serializable {
      * Relational field containing Customers owning the account.
      * @return the customers
      */
+    @XmlTransient
     public Set<Customer> getCustomers() {
         return customers;
     }
@@ -214,7 +215,6 @@ public class Account implements Serializable {
      * Relational field containing the list of movements on the account.
      * @return the movements
      */
-    @XmlTransient
     public Set<Movement> getMovements() {
         return movements;
     }

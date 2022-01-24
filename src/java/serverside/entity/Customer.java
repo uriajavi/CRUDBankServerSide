@@ -204,7 +204,6 @@ public class Customer implements Serializable {
     /**
      * @return the accounts
      */
-    @XmlTransient
     public Set<Account> getAccounts() {
         return accounts;
     }

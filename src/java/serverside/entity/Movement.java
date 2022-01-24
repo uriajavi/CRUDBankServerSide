@@ -124,6 +124,7 @@ public class Movement implements Serializable {
      * Account for the movement.
      * @return the account
      */
+    @XmlTransient
     public Account getAccount() {
         return account;
     }
