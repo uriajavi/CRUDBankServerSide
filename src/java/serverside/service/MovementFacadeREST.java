@@ -15,6 +15,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.InternalServerErrorException;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -97,13 +98,16 @@ public class MovementFacadeREST {
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     public Movement find(@PathParam("id") Long id) {
+        Movement movement;
         try {
             LOGGER.log(Level.INFO,"Reading data for movement {0}",id);
-            return ejb.findMovement(id);
+            movement=ejb.findMovement(id);
+            if (movement==null) throw new NotFoundException();
         } catch (ReadException ex) {
             LOGGER.severe(ex.getMessage());
             throw new InternalServerErrorException(ex.getMessage());        
         }
+        return movement;
     }
     /**
      * GET method to get movements for a given account: it uses the business method 
