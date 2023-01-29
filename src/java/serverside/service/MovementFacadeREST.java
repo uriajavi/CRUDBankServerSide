@@ -44,15 +44,19 @@ public class MovementFacadeREST {
     private Logger LOGGER=Logger.getLogger(MovementFacadeREST.class.getName());
     /**
      * POST method to create movements: uses createMovementt business logic method.
+     * @param accountId The id of the account that movement belongs to.
      * @param movement The Movement object containing data.
      */
     @POST
+    @Path("{accountId}")
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-    public void create(Movement movement) {
+    public void create(@PathParam("accountId") Long accountId,Movement movement) {
         try {
             LOGGER.log(Level.INFO,"Creating movement {0}",movement.getId());
+            //find account and set it as movement's.
+            movement.setAccount(ejb.findAccount(accountId));
             ejb.createMovement(movement);
-        } catch (CreateException ex) {
+        } catch (CreateException | ReadException ex) {
             LOGGER.severe(ex.getMessage());
             throw new InternalServerErrorException(ex.getMessage());        
         }

@@ -67,6 +67,8 @@ public class EJBBankManager implements BankManagerLocal{
     @Override
     public void createMovement(Movement movement) throws CreateException {
         try{
+            //update account balance from movement balance
+            movement.getAccount().setBalance(movement.getBalance());
             //if persistence context does not contain account for movement
             //merge it to update account's balance after movement
             if(!em.contains(movement.getAccount()))
