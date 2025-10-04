@@ -14,8 +14,10 @@ import static javax.persistence.FetchType.EAGER;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -25,10 +27,15 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Javier Martín Uría
  */
 @Entity
-@Table(name="customer",schema="bankdb")
-@NamedQuery(name="findAllCustomers",
-            query="SELECT c FROM Customer c"
-)
+@Table(name="customer",
+       schema="bankdb",
+       uniqueConstraints=@UniqueConstraint(columnNames={"email"}))
+@NamedQueries({
+    @NamedQuery(name="findAllCustomers",
+                query="SELECT c FROM Customer c"),
+    @NamedQuery(name="findCustomerByEmailPassword",
+                query="SELECT c FROM Customer c WHERE c.email = :email and c.password= :password ")
+})
 @XmlRootElement
 public class Customer implements Serializable {
 
@@ -74,6 +81,10 @@ public class Customer implements Serializable {
      * Customer's email.
      */
     private String email;
+    /**
+     * Customer's password for basic authentication.
+     */
+    private String password;
     /**
      * Relational field for customer's accounts.
      */
@@ -200,6 +211,18 @@ public class Customer implements Serializable {
      */
     public void setEmail(String email) {
         this.email = email;
+    }
+    /**
+     * @return the password
+     */
+    public String getPassword() {
+        return password;
+    }
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(String password) {
+        this.password = password;
     }
     /**
      * @return the accounts

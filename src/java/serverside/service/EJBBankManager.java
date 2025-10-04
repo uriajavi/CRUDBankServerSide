@@ -6,15 +6,18 @@
 package serverside.service;
 
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import serverside.entity.Account;
 import serverside.entity.Customer;
 import serverside.entity.Movement;
 import serverside.exceptions.CreateException;
 import serverside.exceptions.DeleteException;
+import serverside.exceptions.LoginException;
 import serverside.exceptions.ReadException;
 import serverside.exceptions.UpdateException;
 
@@ -53,6 +56,14 @@ public class EJBBankManager implements BankManagerLocal{
      @Override
     public void createCustomer (Customer  customer)throws CreateException {
         try{
+            //Generate new long for Customer id
+            Long newId;
+            Random generator=new java.util.Random();
+            do{
+                newId=generator.nextLong();
+            }while(newId <= 0);
+            //set generated id
+            customer.setId(newId);
             em.persist(customer);
         }catch(Exception e){
             throw new CreateException(e.getMessage());
@@ -268,6 +279,34 @@ public class EJBBankManager implements BankManagerLocal{
         }
         return accounts;
     }
+    /**
+     * This method gets the customer data for a combination of email and password.
+     * It is suitable for authentication and to get the data of the authenticated
+     * Customer.
+     * @param email The email for the customer
+     * @param password The password for the customer
+     * @return A Customer object with the data of the customer.
+     * @throws LoginException In there is no customer with such credentials.
+     * @throws ReadException Thrown when a unspecified error or exception occurs during 
+     * reading.
+     */
+    @Override
+    public Customer findCustomerByEmailPassword(String email, String password) 
+            throws LoginException,ReadException {
+        Customer customer;
+        try{
+            customer=(Customer)em.createNamedQuery("findCustomerByEmailPassword")
+                    .setParameter("email", email)
+                    .setParameter("password", password)
+                    .getSingleResult();
+        }catch(NoResultException e){
+            throw new LoginException("No customer with such credentials.");
+        }catch(Exception e){
+            throw new ReadException(e.getMessage());
+        }
+        return customer;
+    }
+
     /**
      * This method gets a list with all movements for an account in the data store. 
      * @param idAccount The id for the account 

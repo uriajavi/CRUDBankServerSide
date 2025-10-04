@@ -13,6 +13,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.InternalServerErrorException;
+import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -22,6 +23,7 @@ import javax.ws.rs.core.MediaType;
 import serverside.entity.Customer;
 import serverside.exceptions.CreateException;
 import serverside.exceptions.DeleteException;
+import serverside.exceptions.LoginException;
 import serverside.exceptions.ReadException;
 import serverside.exceptions.UpdateException;
 
@@ -99,6 +101,30 @@ public class CustomerFacadeREST {
         try{
             LOGGER.log(Level.INFO,"Reading data for customer {0}",id);
             return ejb.findCustomer(id);
+        } catch (ReadException ex) {
+            LOGGER.severe(ex.getMessage());
+            throw new InternalServerErrorException(ex.getMessage());        
+        }
+        
+    }
+    /**
+     * GET method for getting a customer by its email and password.
+     * @param email The customer email. 
+     * @param password The customer password.
+     * @return A Customer object.
+     */
+    @GET
+    @Path("/sigin/{email}/{password}")
+    @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    public Customer findCustomerByEmailPassword(@PathParam("email") String email,
+                                                @PathParam("password") String password) 
+    {
+        try{
+            LOGGER.log(Level.INFO,"Signing in data customer {0}",email);
+            return ejb.findCustomerByEmailPassword(email,password);
+        } catch (LoginException ex) {
+            LOGGER.severe(ex.getMessage());
+            throw new NotAuthorizedException(ex.getMessage());        
         } catch (ReadException ex) {
             LOGGER.severe(ex.getMessage());
             throw new InternalServerErrorException(ex.getMessage());        

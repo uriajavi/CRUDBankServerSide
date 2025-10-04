@@ -13,6 +13,7 @@ import serverside.entity.Customer;
 import serverside.entity.Movement;
 import serverside.exceptions.CreateException;
 import serverside.exceptions.DeleteException;
+import serverside.exceptions.LoginException;
 import serverside.exceptions.ReadException;
 import serverside.exceptions.UpdateException;
 
@@ -139,4 +140,17 @@ public interface BankManagerLocal {
      * reading.
      */
     public List<Movement> findMovementsByAccountId(Long idAccount) throws ReadException;
+        /**
+     * This method gets the customer data for a combination of email and password.
+     * It is suitable for authentication and to get the data of the authenticated
+     * Customer.
+     * @param email The email for the customer
+     * @param password The password for the customer
+     * @return A Customer object with the data of the customer.
+     * @throws LoginException In there is no customer with such credentials.
+     * @throws ReadException Thrown when a unspecified error or exception occurs during 
+     * reading.
+     */
+    public Customer findCustomerByEmailPassword(String email, String password)
+            throws LoginException,ReadException;
 }
