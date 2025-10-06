@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.ForbiddenException;
 import javax.ws.rs.GET;
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.NotAuthorizedException;
@@ -23,6 +24,7 @@ import javax.ws.rs.core.MediaType;
 import serverside.entity.Customer;
 import serverside.exceptions.CreateException;
 import serverside.exceptions.DeleteException;
+import serverside.exceptions.EmailAlreadyExists;
 import serverside.exceptions.LoginException;
 import serverside.exceptions.ReadException;
 import serverside.exceptions.UpdateException;
@@ -50,8 +52,13 @@ public class CustomerFacadeREST {
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     public void create(Customer entity) {
         try {
-            LOGGER.log(Level.INFO,"Creating customer {0}",entity.getId());
+            LOGGER.log(Level.INFO,"Creating customer for email {0}",entity.getEmail());
             ejb.createCustomer(entity);
+        } catch (EmailAlreadyExists ex) {
+            //If email already exists respond with a HTTP 403 error code
+            LOGGER.severe(ex.getMessage());
+            throw new ForbiddenException(ex.getMessage());        
+
         } catch (CreateException ex) {
             LOGGER.severe(ex.getMessage());
             throw new InternalServerErrorException(ex.getMessage());        

@@ -34,7 +34,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name="findAllCustomers",
                 query="SELECT c FROM Customer c"),
     @NamedQuery(name="findCustomerByEmailPassword",
-                query="SELECT c FROM Customer c WHERE c.email = :email and c.password= :password ")
+                query="SELECT c FROM Customer c WHERE c.email = :email and c.password= :password "),
+    @NamedQuery(name="findCustomerByEmail",
+                query="SELECT c FROM Customer c WHERE c.email = :email ")    
 })
 @XmlRootElement
 public class Customer implements Serializable {

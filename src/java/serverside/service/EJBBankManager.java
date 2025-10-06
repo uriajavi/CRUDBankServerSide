@@ -17,6 +17,7 @@ import serverside.entity.Customer;
 import serverside.entity.Movement;
 import serverside.exceptions.CreateException;
 import serverside.exceptions.DeleteException;
+import serverside.exceptions.EmailAlreadyExists;
 import serverside.exceptions.LoginException;
 import serverside.exceptions.ReadException;
 import serverside.exceptions.UpdateException;
@@ -54,8 +55,17 @@ public class EJBBankManager implements BankManagerLocal{
      * creation.
      */
      @Override
-    public void createCustomer (Customer  customer)throws CreateException {
+    public void createCustomer (Customer  customer)throws CreateException, EmailAlreadyExists {
         try{
+            //Check if the email already exist in the database
+            em.createNamedQuery("findCustomerByEmail")
+                    .setParameter("email", customer.getEmail())
+                    .getSingleResult();
+            //If there is no exception in the previous call that means that
+            //email alrady exists
+            throw new EmailAlreadyExists("That email already exists in the database");
+        }catch(NoResultException e){
+        //If that email is not in the table, create the new customer    
             //Generate new long for Customer id
             Long newId;
             Random generator=new java.util.Random();
@@ -65,8 +75,10 @@ public class EJBBankManager implements BankManagerLocal{
             //set generated id
             customer.setId(newId);
             em.persist(customer);
+        }catch(EmailAlreadyExists e){
+            throw e;
         }catch(Exception e){
-            throw new CreateException(e.getMessage());
+            throw new CreateException(e.getMessage());    
         }
     }
     /**

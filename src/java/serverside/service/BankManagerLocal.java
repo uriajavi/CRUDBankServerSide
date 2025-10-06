@@ -13,6 +13,7 @@ import serverside.entity.Customer;
 import serverside.entity.Movement;
 import serverside.exceptions.CreateException;
 import serverside.exceptions.DeleteException;
+import serverside.exceptions.EmailAlreadyExists;
 import serverside.exceptions.LoginException;
 import serverside.exceptions.ReadException;
 import serverside.exceptions.UpdateException;
@@ -36,7 +37,7 @@ public interface BankManagerLocal {
      * @throws CreateException Thrown when any error or exception occurs during 
      * creation.
      */
-    public void createCustomer (Customer  customer) throws CreateException;
+    public void createCustomer (Customer  customer) throws CreateException, EmailAlreadyExists;
     /**
      * This method creates a new movement for an account in the data store.
      * @param movement The Movement entity object containing new movement data.
