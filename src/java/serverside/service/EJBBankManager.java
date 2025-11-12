@@ -66,14 +66,14 @@ public class EJBBankManager implements BankManagerLocal{
             throw new EmailAlreadyExists("That email already exists in the database");
         }catch(NoResultException e){
         //If that email is not in the table, create the new customer    
-            //Generate new long for Customer id
-            Long newId;
+            //Generate new Customer id
+            Integer newId;
             Random generator=new java.util.Random();
             do{
-                newId=generator.nextLong();
+                newId=generator.nextInt();
             }while(newId <= 0);
             //set generated id
-            customer.setId(newId);
+            customer.setId(new Long(newId));
             em.persist(customer);
         }catch(EmailAlreadyExists e){
             throw e;
