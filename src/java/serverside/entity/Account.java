@@ -199,7 +199,6 @@ public class Account implements Serializable {
      * Relational field containing Customers owning the account.
      * @return the customers
      */
-    @XmlTransient
     public Set<Customer> getCustomers() {
         return customers;
     }
