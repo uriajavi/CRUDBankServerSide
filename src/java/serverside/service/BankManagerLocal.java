@@ -7,7 +7,7 @@ package serverside.service;
 
 import java.util.List;
 import java.util.Set;
-import javax.ejb.Local;
+import jakarta.ejb.Local;
 import serverside.entity.Account;
 import serverside.entity.Customer;
 import serverside.entity.Movement;

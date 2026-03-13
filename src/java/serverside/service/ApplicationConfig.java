@@ -6,13 +6,13 @@
 package serverside.service;
 
 import java.util.Set;
-import javax.ws.rs.core.Application;
+import jakarta.ws.rs.core.Application;
 
 /**
  * This is the User management RESTful web service application class.
  * @author Javier Martín Uría
  */
-@javax.ws.rs.ApplicationPath("webresources")
+@jakarta.ws.rs.ApplicationPath("webresources")
 public class ApplicationConfig extends Application {
     /**
      * Gets classes for web service application resources.  

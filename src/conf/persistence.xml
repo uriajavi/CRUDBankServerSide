@@ -1,13 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+<!--persistence version="3.2" xmlns="https://jakarta.ee/xml/ns/persistence" 
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_2.xsd">
   <persistence-unit name="DataModelExamplePU" transaction-type="JTA">
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     <jta-data-source>jdbc/__mysql</jta-data-source>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <shared-cache-mode>NONE</shared-cache-mode>
     <properties>
-      <property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform"/>
-      <property name="javax.persistence.schema-generation.database.action" value="none"/>
+      <property name="hibernate.transaction.jta.platform" 
+                value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform"/>
+      <property name="javax.persistence.schema-generation.database.action" 
+                value="none"/>
     </properties>
   </persistence-unit>
+</persistence-->
+
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence
+                                 https://jakarta.ee/xml/ns/persistence/persistence_3_2.xsd"
+             version="3.2">
+    <persistence-unit name="DataModelExamplePU" transaction-type="JTA">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <jta-data-source>jdbc/__mysql</jta-data-source>
+        <properties>
+            <!-- Dialect -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+            <!-- Debug SQL -->
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <!-- Performance -->
+            <property name="hibernate.jdbc.batch_size" value="30"/>
+            <property name="hibernate.order_inserts" value="true"/>
+            <property name="hibernate.order_updates" value="true"/>
+            <!-- Charset -->
+            <property name="hibernate.connection.characterEncoding" value="utf8"/>
+            <!-- Timezone -->
+            <property name="hibernate.jdbc.time_zone" value="UTC"/>
+            <!--JTA platform-->
+            <!--property name="hibernate.transaction.jta.platform" 
+                value="org.hibernate.engine.transaction.jta.platform.internal.GlassFishJtaPlatform"/-->
+            <property name="hibernate.transaction.jta.platform" 
+                      value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform"/>
+            <!-- DB Catalog and Action -->
+            <property name="hibernate.default_catalog" value="bankdb"/>
+            <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
+        </properties>
+    </persistence-unit>
 </persistence>
