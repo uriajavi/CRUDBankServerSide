@@ -55,6 +55,13 @@ INSERT INTO `movement` (id,amount,balance,description,timestamp,account_id) VALU
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
+--
+-- Setting `movement_seq` for movement id generation
+--
+DELETE FROM movement_seq;
+INSERT INTO movement_seq(next_val) VALUES (8);
+
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;

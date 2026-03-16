@@ -7,6 +7,7 @@ package serverside.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import jakarta.json.bind.annotation.JsonbTransient;
 import java.io.Serializable;
 import java.util.Date;
 import static jakarta.persistence.CascadeType.MERGE;
@@ -125,6 +126,7 @@ public class Movement implements Serializable {
      * @return the account
      */
     @XmlTransient
+    @JsonbTransient
     public Account getAccount() {
         return account;
     }

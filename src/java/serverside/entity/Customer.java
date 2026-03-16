@@ -5,14 +5,13 @@
  */
 package serverside.entity;
 
+import jakarta.json.bind.annotation.JsonbTransient;
 import java.io.Serializable;
 import java.util.Set;
 import static jakarta.persistence.CascadeType.MERGE;
-import static jakarta.persistence.CascadeType.PERSIST;
 import jakarta.persistence.Entity;
 import static jakarta.persistence.FetchType.EAGER;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
@@ -230,6 +229,7 @@ public class Customer implements Serializable {
      * @return the accounts
      */
     @XmlTransient
+    @JsonbTransient
     public Set<Account> getAccounts() {
         return accounts;
     }
